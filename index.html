@@ -1,13 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Love</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #ffe6f0, #f0e6ff, #e6f7ff);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            color: #5a4a6a;
+            position: relative;
+        }
+
+        /* Twinkling stars background */
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: #fff;
+            border-radius: 50%;
+            animation: twinkle 2s infinite ease-in-out;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        /* Floating background elements */
+        .floating-element {
+            position: absolute;
+            font-size: 1.5rem;
+            opacity: 0.3;
+            animation: floatAround 10s infinite linear;
+        }
+
+        @keyframes floatAround {
+            0% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+            100% { transform: translateY(0) rotate(360deg); }
+        }
+
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3rem;
+            margin-bottom: 2rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            white-space: nowrap;
+            border-right: 2px solid #5a4a6a;
+            animation: typing 3s steps(15, end), blink-caret 0.75s step-end infinite;
+        }
+
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent; }
+            50% { border-color: #5a4a6a; }
+        }
+
+        .container {
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        #message {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            opacity: 0;
+            transform: scale(0.8) translateY(20px);
+            transition: all 0.8s ease;
+            min-height: 3rem;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 1.5rem;
+            border-radius: 30px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            border: 2px solid #ffb3d9;
+        }
+
+        #message.show {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+        }
+
+        #poem {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.5rem;
+            margin-top: 2rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 1s ease 0.5s;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 1rem;
+            border-radius: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+        }
+
+        #poem.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        button {
+            background: linear-gradient(135deg, #ffb3d9, #d9b3ff, #b3d9ff);
+            border: none;
+            border-radius: 50%;
+            width: 150px;
+            height: 150px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #5a4a6a;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1), 0 0 20px rgba(255, 179, 217, 0.5);
+            transition: all 0.3s ease;
+            animation: pulse 2s infinite, rotate 10s infinite linear;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1), 0 0 20px rgba(255, 179, 217, 0.5); }
+            50% { box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1), 0 0 30px rgba(255, 179, 217, 0.8); }
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15), 0 0 30px rgba(255, 179, 217, 0.8);
+        }
+
+        button:active {
+            transform: scale(0.9);
+        }
+
+        .heart {
+            position: absolute;
+            font-size: 2rem;
+            color: #ff6b9d;
+            animation: float 4s ease-out forwards;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #ffb3d9;
+            animation: confettiFall 4s ease-out forwards;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .sparkle {
+            position: absolute;
+            font-size: 1rem;
+            color: #ffd700;
+            animation: sparkle 2s ease-out forwards;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        @keyframes float {
+            0% {
+                opacity: 1;
+                transform: translateY(0) scale(1) rotate(0deg);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-120vh) scale(0.5) rotate(360deg);
+            }
+        }
+
+        @keyframes confettiFall {
+            0% {
+                opacity: 1;
+                transform: translateY(0) rotate(0deg);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(120vh) rotate(720deg);
+            }
+        }
+
+        @keyframes sparkle {
+            0% {
+                opacity: 1;
+                transform: scale(0);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.5);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(0);
+            }
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2rem;
+            }
+            #message {
+                font-size: 1.5rem;
+            }
+            #poem {
+                font-size: 1.2rem;
+            }
+            button {
+                width: 120px;
+                height: 120px;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Twinkling stars -->
+    <div class="star" style="top: 10%; left: 20%;"></div>
+    <div class="star" style="top: 15%; left: 70%;"></div>
+    <div class="star" style="top: 30%; left: 40%;"></div>
+    <div class="star" style="top: 50%; left: 10%;"></div>
+    <div class="star" style="top: 70%; left: 80%;"></div>
+    <div class="star" style="top: 85%; left: 50%;"></div>
+
+    <!-- Floating background elements -->
+    <div class="floating-element" style="top: 10%; left: 10%;">💖</div>
+    <div class="floating-element" style="top: 20%; right: 15%;">🌸</div>
+    <div class="floating-element" style="bottom: 15%; left: 20%;">🌹</div>
+    <div class="floating-element" style="bottom: 25%; right: 10%;">💕</div>
+    <div class="floating-element" style="top: 40%; left: 80%;">🌟</div>
+
+    <h1>My Dearest Love</h1>
+    <div class="container">
+        <div id="message"></div>
+        <button id="loveButton">
+            <span>Press Me</span>
+            <span>❤️</span>
+        </button>
+        <div id="poem"></div>
+    </div>
+
+    <script>
+        const messages = [
+            "I miss you more than words can say",
+            "I love you to the moon and back",
+            "You mean the world to me, and more",
+            "You're my everything, my forever",
+            "My heart beats only for you",
+            "Forever yours, in every way",
+            "You make my world brighter",
+            "Thinking of you fills me with joy",
+            "You're my dream come true",
+            "With you, every moment is magic",
+            "You're the love of my life",
+            "I cherish every second with you"
+        ];
+
+        const poems = [
+            "Roses are red, violets are blue,<br>My love for you is endless and true.<br>Every moment with you is a dream,<br>You're my heart, my soul, my everything.",
+            "In your eyes, I see my world,<br>A love so deep, forever unfurled.<br>With every beat, my heart calls your name,<br>Together forever, in love's sweet flame.",
+            "Like stars that shine in the night sky,<br>Your smile lights up my life.<br>Hand in hand, we'll walk through time,<br>My love, my joy, forever mine."
+        ];
+
+        const button = document.getElementById('loveButton');
+        const messageDiv = document.getElementById('message');
+        const poemDiv = document.getElementById('poem');
+        let clickCount = 0;
+
+        button.addEventListener('click', () => {
+            clickCount++;
+
+            // Show random message
+            const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+            messageDiv.textContent = randomMessage;
+            messageDiv.classList.add('show');
+
+            // Hide message after 5 seconds
+            setTimeout(() => {
+                messageDiv.classList.remove('show');
+            }, 5000);
+
+            // On second click, show poem
+            if (clickCount % 2 === 0) {
+                const randomPoem = poems[Math.floor(Math.random() * poems.length)];
+                poemDiv.innerHTML = randomPoem;
+                poemDiv.classList.add('show');
+
+                setTimeout(() => {
+                    poemDiv.classList.remove('show');
+                }, 8000);
+            }
+
+            // Create floating hearts with variety
+            const heartEmojis = ['❤️', '💖', '💕', '💗', '💓', '💘'];
+            for (let i = 0; i < 20; i++) {
                 const heart = document.createElement('div');
                 heart.className = 'heart';
                 heart.textContent = heartEmojis[Math.floor(Math.random() * heartEmojis.length)];
                 heart.style.left = Math.random() * 100 + 'vw';
                 heart.style.animationDelay = Math.random() * 2 + 's';
                 document.body.appendChild(heart);
+
                 setTimeout(() => {
                     heart.remove();
                 }, 4000);
             }
+
             // Add confetti effect
             for (let i = 0; i < 30; i++) {
                 const confetti = document.createElement('div');
@@ -16,10 +337,12 @@
                 confetti.style.background = ['#ffb3d9', '#d9b3ff', '#b3d9ff', '#ff6b9d', '#ffd700'][Math.floor(Math.random() * 5)];
                 confetti.style.animationDelay = Math.random() * 2 + 's';
                 document.body.appendChild(confetti);
+
                 setTimeout(() => {
                     confetti.remove();
                 }, 4000);
             }
+
             // Add sparkle effects
             for (let i = 0; i < 10; i++) {
                 const sparkle = document.createElement('div');
@@ -29,6 +352,7 @@
                 sparkle.style.top = Math.random() * 100 + 'vh';
                 sparkle.style.animationDelay = Math.random() * 1 + 's';
                 document.body.appendChild(sparkle);
+
                 setTimeout(() => {
                     sparkle.remove();
                 }, 2000);
