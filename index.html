@@ -19,6 +19,7 @@
             overflow: hidden;
             color: #5a4a6a;
             position: relative;
+            transition: background 1s ease;
         }
 
         /* Twinkling stars background */
@@ -48,6 +49,21 @@
             0% { transform: translateY(0) rotate(0deg); }
             50% { transform: translateY(-20px) rotate(180deg); }
             100% { transform: translateY(0) rotate(360deg); }
+        }
+
+        /* Floating quotes */
+        .floating-quote {
+            position: absolute;
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.2rem;
+            color: rgba(90, 74, 106, 0.5);
+            animation: floatQuote 15s infinite linear;
+            white-space: nowrap;
+        }
+
+        @keyframes floatQuote {
+            0% { transform: translateX(-100vw); }
+            100% { transform: translateX(100vw); }
         }
 
         h1 {
@@ -116,6 +132,87 @@
             transform: translateY(0);
         }
 
+        #counter {
+            font-size: 1.2rem;
+            margin-top: 1rem;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        #counter.show {
+            opacity: 1;
+        }
+
+        #photo {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px;
+            height: 300px;
+            opacity: 0;
+            transition: opacity 1s ease;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            z-index: -1;
+        }
+
+        #photo.show {
+            opacity: 0.7;
+        }
+
+        #loveNote {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 255, 255, 0.95);
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.5rem;
+            text-align: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s ease;
+            z-index: 10;
+        }
+
+        #loveNote.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        #surprise {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 1s ease;
+            z-index: 20;
+        }
+
+        #surprise.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        #surprise img {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            margin-bottom: 1rem;
+        }
+
         button {
             background: linear-gradient(135deg, #ffb3d9, #d9b3ff, #b3d9ff);
             border: none;
@@ -182,6 +279,58 @@
             z-index: 2;
         }
 
+        .firework {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            background: #ffb3d9;
+            border-radius: 50%;
+            animation: fireworkBurst 2s ease-out forwards;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        @keyframes fireworkBurst {
+            0% {
+                opacity: 1;
+                transform: scale(0);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(2);
+            }
+        }
+
+        .cursor-heart {
+            position: absolute;
+            font-size: 1rem;
+            color: #ff6b9d;
+            pointer-events: none;
+            animation: cursorFade 1s ease-out forwards;
+            z-index: 3;
+        }
+
+        @keyframes cursorFade {
+            0% { opacity: 1; transform: scale(1); }
+            100% { opacity: 0; transform: scale(0.5); }
+        }
+
+        .animated-character {
+            position: absolute;
+            font-size: 2rem;
+            animation: bounce 2s infinite;
+            z-index: 1;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
         @keyframes float {
             0% {
                 opacity: 1;
@@ -234,10 +383,23 @@
                 height: 120px;
                 font-size: 1rem;
             }
+            #photo {
+                width: 200px;
+                height: 200px;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Background Music: Instrumental Ishq Wala Love -->
+    <audio id="bgMusic" loop autoplay>
+        <source src="https://www.example.com/instrumental-ishq-wala-love.mp3" type="audio/mp3"> <!-- Replace with actual URL for instrumental Ishq Wala Love. You can download or find a free MP3 link online. -->
+        Your browser does not support the audio element.
+    </audio>
+    <audio id="heartbeat" preload="auto">
+        <source src="https://www.soundjay.com/misc/sounds/heartbeat-01.wav" type="audio/wav"> <!-- Placeholder heartbeat sound -->
+    </audio>
+
     <!-- Twinkling stars -->
     <div class="star" style="top: 10%; left: 20%;"></div>
     <div class="star" style="top: 15%; left: 70%;"></div>
@@ -253,6 +415,15 @@
     <div class="floating-element" style="bottom: 25%; right: 10%;">💕</div>
     <div class="floating-element" style="top: 40%; left: 80%;">🌟</div>
 
+    <!-- Floating quotes -->
+    <div class="floating-quote" style="top: 20%;">You are my favorite feeling.</div>
+    <div class="floating-quote" style="top: 40%; animation-delay: 5s;">You're the best part of my world.</div>
+    <div class="floating-quote" style="top: 60%; animation-delay: 10s;">Every moment with you is a treasure.</div>
+
+    <!-- Animated characters -->
+    <div class="animated-character" style="bottom: 10%; left: 10%;">🧸</div>
+    <div class="animated-character" style="bottom: 10%; right: 10%;">💑</div>
+
     <h1>My Dearest Love</h1>
     <div class="container">
         <div id="message"></div>
@@ -261,6 +432,23 @@
             <span>❤️</span>
         </button>
         <div id="poem"></div>
+        <div id="counter"></div>
+        <img id="photo" src="https://via.placeholder.com/300x300?text=Your+Photo+1" alt="Memory"> <!-- Replace with your photo URLs -->
+    </div>
+
+    <!-- Love Note Modal -->
+    <div id="loveNote">
+        <h2>A Message for You</h2>
+        <p>My love, every day with you is a blessing. I cherish you more than words can express. Forever yours. 💕</p>
+        <button onclick="closeNote()">Close</button>
+    </div>
+
+    <!-- Surprise Ending Modal -->
+    <div id="surprise">
+        <img src="https://via.placeholder.com/200x200?text=Special+Photo" alt="Special Memory"> <!-- Replace with special photo -->
+        <h2>My Promise to You</h2>
+        <p>I promise to love you forever, through every sunrise and sunset. You're my everything. Will you be mine always? ❤️</p>
+        <button onclick="closeSurprise()">Close</button>
     </div>
 
     <script>
@@ -285,79 +473,18 @@
             "Like stars that shine in the night sky,<br>Your smile lights up my life.<br>Hand in hand, we'll walk through time,<br>My love, my joy, forever mine."
         ];
 
-        const button = document.getElementById('loveButton');
-        const messageDiv = document.getElementById('message');
-        const poemDiv = document.getElementById('poem');
-        let clickCount = 0;
+        const photos = [
+            "https://via.placeholder.com/300x300?text=Your+Photo+1", // Replace with actual photo URLs
+            "https://via.placeholder.com/300x300?text=Your+Photo+2",
+            "https://via.placeholder.com/300x300?text=Your+Photo+3"
+        ];
 
-        button.addEventListener('click', () => {
-            clickCount++;
+        const backgrounds = [
+            "linear-gradient(135deg, #ffe6f0, #f0e6ff, #e6f7ff)", // Default
+            "linear-gradient(135deg, #ff9a9e, #fecfef, #fecfef)", // Sunset
+            "linear-gradient(135deg, #667eea, #764ba2)", // Galaxy
+            "linear-gradient(135deg, #ffecd2, #fcb69f)", // Heart clouds
+            "linear-gradient(135deg, #a8edea, #fed6e3)" // Sparkles
+        ];
 
-            // Show random message
-            const randomMessage = messages[Math.floor(Math.random() * messages.length)];
-            messageDiv.textContent = randomMessage;
-            messageDiv.classList.add('show');
-
-            // Hide message after 5 seconds
-            setTimeout(() => {
-                messageDiv.classList.remove('show');
-            }, 5000);
-
-            // On second click, show poem
-            if (clickCount % 2 === 0) {
-                const randomPoem = poems[Math.floor(Math.random() * poems.length)];
-                poemDiv.innerHTML = randomPoem;
-                poemDiv.classList.add('show');
-
-                setTimeout(() => {
-                    poemDiv.classList.remove('show');
-                }, 8000);
-            }
-
-            // Create floating hearts with variety
-            const heartEmojis = ['❤️', '💖', '💕', '💗', '💓', '💘'];
-            for (let i = 0; i < 20; i++) {
-                const heart = document.createElement('div');
-                heart.className = 'heart';
-                heart.textContent = heartEmojis[Math.floor(Math.random() * heartEmojis.length)];
-                heart.style.left = Math.random() * 100 + 'vw';
-                heart.style.animationDelay = Math.random() * 2 + 's';
-                document.body.appendChild(heart);
-
-                setTimeout(() => {
-                    heart.remove();
-                }, 4000);
-            }
-
-            // Add confetti effect
-            for (let i = 0; i < 30; i++) {
-                const confetti = document.createElement('div');
-                confetti.className = 'confetti';
-                confetti.style.left = Math.random() * 100 + 'vw';
-                confetti.style.background = ['#ffb3d9', '#d9b3ff', '#b3d9ff', '#ff6b9d', '#ffd700'][Math.floor(Math.random() * 5)];
-                confetti.style.animationDelay = Math.random() * 2 + 's';
-                document.body.appendChild(confetti);
-
-                setTimeout(() => {
-                    confetti.remove();
-                }, 4000);
-            }
-
-            // Add sparkle effects
-            for (let i = 0; i < 10; i++) {
-                const sparkle = document.createElement('div');
-                sparkle.className = 'sparkle';
-                sparkle.textContent = '✨';
-                sparkle.style.left = Math.random() * 100 + 'vw';
-                sparkle.style.top = Math.random() * 100 + 'vh';
-                sparkle.style.animationDelay = Math.random() * 1 + 's';
-                document.body.appendChild(sparkle);
-
-                setTimeout(() => {
-                    sparkle.remove();
-                }, 2000);
-            }
-        });
-    </script>
-</body>
-</html>
+        const button =
