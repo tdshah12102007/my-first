@@ -1,0 +1,39 @@
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.textContent = heartEmojis[Math.floor(Math.random() * heartEmojis.length)];
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDelay = Math.random() * 2 + 's';
+                document.body.appendChild(heart);
+                setTimeout(() => {
+                    heart.remove();
+                }, 4000);
+            }
+            // Add confetti effect
+            for (let i = 0; i < 30; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.background = ['#ffb3d9', '#d9b3ff', '#b3d9ff', '#ff6b9d', '#ffd700'][Math.floor(Math.random() * 5)];
+                confetti.style.animationDelay = Math.random() * 2 + 's';
+                document.body.appendChild(confetti);
+                setTimeout(() => {
+                    confetti.remove();
+                }, 4000);
+            }
+            // Add sparkle effects
+            for (let i = 0; i < 10; i++) {
+                const sparkle = document.createElement('div');
+                sparkle.className = 'sparkle';
+                sparkle.textContent = '✨';
+                sparkle.style.left = Math.random() * 100 + 'vw';
+                sparkle.style.top = Math.random() * 100 + 'vh';
+                sparkle.style.animationDelay = Math.random() * 1 + 's';
+                document.body.appendChild(sparkle);
+                setTimeout(() => {
+                    sparkle.remove();
+                }, 2000);
+            }
+        });
+    </script>
+</body>
+</html>
